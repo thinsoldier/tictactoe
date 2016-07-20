@@ -6,12 +6,20 @@ $(document).ready(function() {
   var isSinglePlayer = false;
   var gameOver = false;
   
+  var $cells = $('.board td');
+  
   var $messageBox = $('.i-message-box span');
   
   var messageAlert = function( text )
   {
     $messageBox.stop().css('opacity',1);
     $messageBox.html(text).animate( {opacity:0}, 3000 );
+  }
+  
+  var highlightWinningMove = function( items )
+  {
+    for( i in items)
+    { $cells.eq( items[i] ).addClass('winning'); }
   }
 
   $("#resetButton").click( resetBoard );
@@ -85,83 +93,98 @@ $(document).ready(function() {
     if ($("#0").text() == "X" && $("#1").text() == "X" && $("#2").text() == "X" && gameOver === false) {
       messageAlert("X wins!");
       gameOver = true;
-      resetBoard();
+      highlightWinningMove([0,1,2]);
+      
     } else if ($("#3").text() == "X" && $("#4").text() == "X" && $("#5").text() == "X" && gameOver === false) {
       messageAlert("X wins!");
       gameOver = true;
-      resetBoard();
+      highlightWinningMove([3,4,5]);
+      
     } else if ($("#6").text() == "X" && $("#7").text() == "X" && $("#8").text() == "X" && gameOver === false) {
       messageAlert("X wins!");
       gameOver = true;
-      resetBoard();
+      highlightWinningMove([6,7,8]);
+      
     }
     // Vertical X Wins
     if ($("#0").text() == "X" && $("#3").text() == "X" && $("#6").text() == "X" && gameOver === false) {
       messageAlert("X wins!");
       gameOver = true;
-      resetBoard();
+      highlightWinningMove([0,3,6]);
+      
     } else if ($("#1").text() == "X" && $("#4").text() == "X" && $("#7").text() == "X" && gameOver === false) {
       messageAlert("X wins!");
       gameOver = true;
-      resetBoard();
+      highlightWinningMove([1,4,7]);
+      
     } else if ($("#2").text() == "X" && $("#5").text() == "X" && $("#8").text() == "X" && gameOver === false) {
       messageAlert("X wins!");
       gameOver = true;
-      resetBoard();
+      highlightWinningMove([2,5,8]);
+      
     }
     // Diagonal X Wins
     if ($("#0").text() == "X" && $("#4").text() == "X" && $("#8").text() == "X" && gameOver === false) {
       messageAlert("X wins!");
       gameOver = true;
-      resetBoard();
+      highlightWinningMove([0,4,8]);
+      
     } else if ($("#2").text() == "X" && $("#4").text() == "X" && $("#6").text() == "X" && gameOver === false) {
       messageAlert("X wins!");
       gameOver = true;
-      resetBoard();
+      highlightWinningMove([2,4,6]);
+      
     }
     // Horizontal O Wins
     if ($("#0").text() == "O" && $("#1").text() == "O" && $("#2").text() == "O" && gameOver === false) {
       messageAlert("O wins!");
       gameOver = true;
-      resetBoard();
+      highlightWinningMove([0,1,2]);
+      
     } else if ($("#3").text() == "O" && $("#4").text() == "O" && $("#5").text() == "O" && gameOver === false) {
       messageAlert("O wins!");
       gameOver = true;
-      resetBoard();
+      highlightWinningMove([3,4,5]);
+      
     } else if ($("#6").text() == "O" && $("#7").text() == "O" && $("#8").text() == "O" && gameOver === false) {
       messageAlert("O wins!");
       gameOver = true;
-      resetBoard();
+      highlightWinningMove([6,7,8]);
+
     }
     // Vertical O Wins
     if ($("#0").text() == "O" && $("#3").text() == "O" && $("#6").text() == "O" && gameOver === false) {
       messageAlert("O wins!");
       gameOver = true;
-      resetBoard();
+      highlightWinningMove([0,3,6]);
+
     } else if ($("#1").text() == "O" && $("#4").text() == "O" && $("#7").text() == "O" && gameOver === false) {
       messageAlert("O wins!");
       gameOver = true;
-      resetBoard();
+      highlightWinningMove([1,4,7]);
+      
     } else if ($("#2").text() == "O" && $("#5").text() == "O" && $("#8").text() == "O" && gameOver === false) {
       messageAlert("O wins!");
       gameOver = true;
-      resetBoard();
+      highlightWinningMove([2,5,8]);
+      
     }
     // Diagonal O Wins
     if ($("#0").text() == "O" && $("#4").text() == "O" && $("#8").text() == "O" && gameOver === false) {
       messageAlert("O wins!");
       gameOver = true;
-      resetBoard();
+      highlightWinningMove([0,4,8]);
+      
     } else if ($("#2").text() == "O" && $("#4").text() == "O" && $("#6").text() == "O" && gameOver === false) {
       messageAlert("O wins!");
       gameOver = true;
-      resetBoard();
+      highlightWinningMove([2,4,6]);
+      
     }
     else if($("#0").text() != "" && $("#1").text() != "" && $("#2").text() != "" && $("#3").text() != "" && $("#4").text() != "" && $("#5").text() != ""
            && $("#6").text() != "" && $("#7").text() != "" && $("#8").text() != "") {
       messageAlert("Tie!");
       gameOver = true;
-      resetBoard();
     }
 
     // Single-player AI
@@ -191,11 +214,6 @@ $(document).ready(function() {
         }
       }
     }
-
-    var cells = $('td');
-console.log( cells.get(0) )
-console.log( cells.get(3) )
-console.log( cells.get(7) )
     
   });
 
@@ -209,6 +227,6 @@ console.log( cells.get(7) )
 
     $("td").empty();
     
-    $(".square").removeClass("X O");
+    $(".square").removeClass("X O winning");
   }
 });

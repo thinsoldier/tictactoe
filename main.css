@@ -21,6 +21,8 @@
   text-align: center;
 }
 
+.winning {background: gold;transition:1s;}
+
 .X {
   color: red;
 }
