@@ -1,0 +1,1 @@
+Refactoring code from @dhuddleston on gitter.im http://codepen.io/dhuddleston/pen/yJvPjL?editors=0010
