@@ -6,9 +6,7 @@ $(document).ready(function() {
   var isSinglePlayer = false;
   var gameOver = false;
 
-  $("#resetButton").click(function() {
-    resetBoard();
-  });
+  $("#resetButton").click( resetBoard );
 
   $("#playAsO").click(function() {
     if (gameStart === false) {
