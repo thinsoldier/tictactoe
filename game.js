@@ -211,6 +211,14 @@ $(document).ready(function() {
       && gameOver === false 
       && playerMove === false) {
       randomEmptyCell().trigger("click");
+      
+      // but really should have an array of win conditions that 
+      // gets looped through to see if the AI player has any
+      // win conditions that are alreay 2/3 of the way there
+      // so it chooses to make that play instead of a random play.
+      // Secondly, the AI player should check if the human player has
+      // any win conditions that are already 2/3 of the way there
+      // so it should choose to make a play that will block the human.
     }
     
   });
