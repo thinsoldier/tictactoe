@@ -21,6 +21,24 @@ $(document).ready(function() {
     for( i in items)
     { $cells.eq( items[i] ).addClass('winning'); }
   }
+  
+  // Returns array of indexes of $cells that are empty
+  var findEmptyCells = function()
+  {
+    var list = [];
+    $cells.each(function(i,e){ 
+      if( $(e).html()==='') 
+      { list.push(i); }
+    })
+    return list;
+  }
+  
+  var randomEmptyCell = function()
+  {
+    var options = findEmptyCells();
+    var randomIndex = options[Math.floor(Math.random()*options.length)];
+    return $cells.eq(randomIndex);
+  }
 
   $("#resetButton").click( resetBoard );
 
@@ -188,31 +206,11 @@ $(document).ready(function() {
     }
 
     // Single-player AI
-    if (isSinglePlayer === true) {
-      // If it is the AI's turn
-      if (gameOver === false) {
-        if (playerMove === false) {
-          if ($("#0").text() === "") {
-            $("#0").trigger("click");
-          } else if ($("#1").text() === "") {
-            $("#1").trigger("click");
-          } else if ($("#2").text() === "") {
-            $("#2").trigger("click");
-          } else if ($("#3").text() === "") {
-            $("#3").trigger("click");
-          } else if ($("#4").text() === "") {
-            $("#4").trigger("click");
-          } else if ($("#5").text() === "") {
-            $("#5").trigger("click");
-          } else if ($("#6").text() === "") {
-            $("#6").trigger("click");
-          } else if ($("#7").text() === "") {
-            $("#7").trigger("click");
-          } else if ($("#8").text() === "") {
-            $("#8").trigger("click");
-          }
-        }
-      }
+    // If it is the AI's turn, click a random empty cell.
+    if (isSinglePlayer === true 
+      && gameOver === false 
+      && playerMove === false) {
+      randomEmptyCell().trigger("click");
     }
     
   });
