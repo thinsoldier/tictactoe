@@ -50,6 +50,11 @@ var TicTacToe = function()
     return $cells.eq(randomIndex);
   }
 
+
+  //-----------------------------
+  // Observe UI interaction events
+  //-----------------------------
+
   $("#resetButton").click( resetBoard );
 
   $("#playAsO").click(function() {
@@ -233,6 +238,7 @@ var TicTacToe = function()
     
   });
 
+  this.resetBoard = resetBoard;
   function resetBoard() {
     moveX = true;
     playerMove = true;
