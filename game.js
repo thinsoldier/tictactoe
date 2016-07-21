@@ -16,6 +16,12 @@ var TicTacToe = function()
   var isSinglePlayer = false;
   var gameOver = false;
   
+  var buttons = {};
+  buttons.x = $("#playAsX");
+  buttons.o = $("#playAsO");
+  buttons.multi = $("#multiPlayer");
+  buttons.single = $("#singlePlayer");
+  
   var $cells = $('.board td');
   
   var $messageBox = $('.i-message-box span');
@@ -57,27 +63,33 @@ var TicTacToe = function()
 
   $("#resetButton").click( resetBoard );
 
-  $("#playAsO").click(function() {
+  $("#playAsO").click(function(e) {
     if (gameStart === false) {
       playerMove = false;
       playerIsX = false;
+      $(e.target).addClass('active');
+      $("#playAsX").removeClass('active');
     } else {
       messageAlert("Game already started!");
     }
   });
 
-  $("#playAsX").click(function() {
+  $("#playAsX").click(function(e) {
     if (gameStart === false) {
       playerMove = true;
       playerIsX = true;
+      $(e.target).addClass('active');
+      $("#playAsO").removeClass('active');
     } else {
       messageAlert("Game already started!");
     }
   });
 
-  $("#singlePlayer").click(function() {
+  $("#singlePlayer").click(function(e) {
     if (gameStart === false) {
       isSinglePlayer = true;
+      $(e.target).addClass('active');
+      $("#multiPlayer").removeClass('active');
       if (playerIsX === false) {
         $("#0").trigger("click");
       }
@@ -86,9 +98,11 @@ var TicTacToe = function()
     }
   });
 
-  $("#multiPlayer").click(function() {
+  $("#multiPlayer").click(function(e) {
     if (gameStart === false) {
       isSinglePlayer = false;
+      $(e.target).addClass('active');
+      $("#singlePlayer").removeClass('active');
     } else {
       messageAlert("Game already started!");
     }
@@ -246,6 +260,10 @@ var TicTacToe = function()
     playerIsX = true;
     isSinglePlayer = false;
     gameOver = false;
+    
+    $("button").removeClass('active');
+    buttons.x.addClass('active');
+    buttons.multi.addClass('active');
 
     $("td").empty();
     
