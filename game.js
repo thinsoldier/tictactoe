@@ -1,4 +1,14 @@
-$(document).ready(function() {
+var game = null;
+
+$(document).ready(function(){
+  game = new TicTacToe();
+});
+
+//-----------------------------
+
+  
+var TicTacToe = function() 
+{
   var moveX = true;
   var playerMove = true;
   var gameStart = false;
@@ -235,4 +245,4 @@ $(document).ready(function() {
     
     $(".square").removeClass("X O winning");
   }
-});
+};
