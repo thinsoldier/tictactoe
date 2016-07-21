@@ -56,6 +56,41 @@ var TicTacToe = function()
     return $cells.eq(randomIndex);
   }
 
+  var checkWinState = function()
+  {
+    var winFormats = [
+      // horizontal
+      [0,1,2],
+      [3,4,5],
+      [6,7,8],
+      //Vertical
+      [0,3,6],
+      [1,4,7],
+      [2,5,8],
+      //diagonal
+      [0,4,8],
+      [2,4,6]
+    ];
+    for(i in winFormats)
+    {
+      var grouping = winFormats[i];
+      var a = $cells.eq(grouping[0]).html();
+      var b = $cells.eq(grouping[1]).html();
+      var c = $cells.eq(grouping[2]).html();
+      
+      if( a === b && b === c && a !== ''){
+        messageAlert( a + " wins !");
+        gameOver = true;
+        highlightWinningMove( grouping );
+      }
+    }
+    // game ends without winner
+    if( !gameOver && findEmptyCells().length === 0 )
+    {
+      messageAlert("Tie!");
+      gameOver = true;
+    }
+  }
 
   //-----------------------------
   // Observe UI interaction events
@@ -109,6 +144,7 @@ var TicTacToe = function()
   });
 
   $(".square").click(function() {
+    // #1 update cell
     if (gameOver === false) {
       if (moveX === true) {
         if ($(this).html() === "") {
@@ -135,106 +171,7 @@ var TicTacToe = function()
       }
     }
 
-    // Winning conditions
-    // Horizontal X Wins
-    if ($("#0").text() == "X" && $("#1").text() == "X" && $("#2").text() == "X" && gameOver === false) {
-      messageAlert("X wins!");
-      gameOver = true;
-      highlightWinningMove([0,1,2]);
-      
-    } else if ($("#3").text() == "X" && $("#4").text() == "X" && $("#5").text() == "X" && gameOver === false) {
-      messageAlert("X wins!");
-      gameOver = true;
-      highlightWinningMove([3,4,5]);
-      
-    } else if ($("#6").text() == "X" && $("#7").text() == "X" && $("#8").text() == "X" && gameOver === false) {
-      messageAlert("X wins!");
-      gameOver = true;
-      highlightWinningMove([6,7,8]);
-      
-    }
-    // Vertical X Wins
-    if ($("#0").text() == "X" && $("#3").text() == "X" && $("#6").text() == "X" && gameOver === false) {
-      messageAlert("X wins!");
-      gameOver = true;
-      highlightWinningMove([0,3,6]);
-      
-    } else if ($("#1").text() == "X" && $("#4").text() == "X" && $("#7").text() == "X" && gameOver === false) {
-      messageAlert("X wins!");
-      gameOver = true;
-      highlightWinningMove([1,4,7]);
-      
-    } else if ($("#2").text() == "X" && $("#5").text() == "X" && $("#8").text() == "X" && gameOver === false) {
-      messageAlert("X wins!");
-      gameOver = true;
-      highlightWinningMove([2,5,8]);
-      
-    }
-    // Diagonal X Wins
-    if ($("#0").text() == "X" && $("#4").text() == "X" && $("#8").text() == "X" && gameOver === false) {
-      messageAlert("X wins!");
-      gameOver = true;
-      highlightWinningMove([0,4,8]);
-      
-    } else if ($("#2").text() == "X" && $("#4").text() == "X" && $("#6").text() == "X" && gameOver === false) {
-      messageAlert("X wins!");
-      gameOver = true;
-      highlightWinningMove([2,4,6]);
-      
-    }
-    // Horizontal O Wins
-    if ($("#0").text() == "O" && $("#1").text() == "O" && $("#2").text() == "O" && gameOver === false) {
-      messageAlert("O wins!");
-      gameOver = true;
-      highlightWinningMove([0,1,2]);
-      
-    } else if ($("#3").text() == "O" && $("#4").text() == "O" && $("#5").text() == "O" && gameOver === false) {
-      messageAlert("O wins!");
-      gameOver = true;
-      highlightWinningMove([3,4,5]);
-      
-    } else if ($("#6").text() == "O" && $("#7").text() == "O" && $("#8").text() == "O" && gameOver === false) {
-      messageAlert("O wins!");
-      gameOver = true;
-      highlightWinningMove([6,7,8]);
-
-    }
-    // Vertical O Wins
-    if ($("#0").text() == "O" && $("#3").text() == "O" && $("#6").text() == "O" && gameOver === false) {
-      messageAlert("O wins!");
-      gameOver = true;
-      highlightWinningMove([0,3,6]);
-
-    } else if ($("#1").text() == "O" && $("#4").text() == "O" && $("#7").text() == "O" && gameOver === false) {
-      messageAlert("O wins!");
-      gameOver = true;
-      highlightWinningMove([1,4,7]);
-      
-    } else if ($("#2").text() == "O" && $("#5").text() == "O" && $("#8").text() == "O" && gameOver === false) {
-      messageAlert("O wins!");
-      gameOver = true;
-      highlightWinningMove([2,5,8]);
-      
-    }
-    // Diagonal O Wins
-    if ($("#0").text() == "O" && $("#4").text() == "O" && $("#8").text() == "O" && gameOver === false) {
-      messageAlert("O wins!");
-      gameOver = true;
-      highlightWinningMove([0,4,8]);
-      
-    } else if ($("#2").text() == "O" && $("#4").text() == "O" && $("#6").text() == "O" && gameOver === false) {
-      messageAlert("O wins!");
-      gameOver = true;
-      highlightWinningMove([2,4,6]);
-      
-    }
-    else if($("#0").text() != "" && $("#1").text() != "" && $("#2").text() != "" && $("#3").text() != "" && $("#4").text() != "" && $("#5").text() != ""
-           && $("#6").text() != "" && $("#7").text() != "" && $("#8").text() != "") {
-      messageAlert("Tie!");
-      gameOver = true;
-    }
-
-    // Single-player AI
+    // #2 Single-player AI
     // If it is the AI's turn, click a random empty cell.
     if (isSinglePlayer === true 
       && gameOver === false 
@@ -250,6 +187,8 @@ var TicTacToe = function()
       // so it should choose to make a play that will block the human.
     }
     
+    // #3 check win state.
+    checkWinState();
   });
 
   this.resetBoard = resetBoard;
