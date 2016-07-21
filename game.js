@@ -182,13 +182,18 @@ var TicTacToe = function()
         }
       }
     }
+    
+    // #2 check win state after click.
+    checkWinState();
 
-    // #2 Single-player AI
-    // If it is the AI's turn, click a random empty cell.
+    // #3 If Single-player AI is active trigger clicking a random empty cell.
     if (isSinglePlayer === true 
       && gameOver === false 
       && playerMove === false) {
       randomEmptyCell().trigger("click");
+      
+      // #4 check win state again after AI click.
+      checkWinState();
       
       // but really should have an array of win conditions that 
       // gets looped through to see if the AI player has any
@@ -198,9 +203,8 @@ var TicTacToe = function()
       // any win conditions that are already 2/3 of the way there
       // so it should choose to make a play that will block the human.
     }
-    
-    // #3 check win state.
-    checkWinState();
+
+  
   });
 
   function resetBoard() {
