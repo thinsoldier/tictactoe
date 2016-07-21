@@ -91,12 +91,24 @@ var TicTacToe = function()
       gameOver = true;
     }
   }
+  
+  var autoPlay = function()
+  {
+    var myCallback = function() {
+      randomEmptyCell().click();
+      if(gameOver){ window.clearInterval(intervalID); }
+    }
+
+    var intervalID = window.setInterval(myCallback, 500);
+  };
 
   //-----------------------------
   // Observe UI interaction events
   //-----------------------------
 
   $("#resetButton").click( resetBoard );
+
+  $("#autoButton").click( autoPlay );
 
   $("#playAsO").click(function(e) {
     if (gameStart === false) {
@@ -191,7 +203,6 @@ var TicTacToe = function()
     checkWinState();
   });
 
-  this.resetBoard = resetBoard;
   function resetBoard() {
     moveX = true;
     playerMove = true;
@@ -208,4 +219,9 @@ var TicTacToe = function()
     
     $(".square").removeClass("X O winning");
   }
+  
+  this.resetBoard = resetBoard;
+  this.findEmptyCells = findEmptyCells;
+  this.randomEmptyCell = randomEmptyCell;
+  
 };
